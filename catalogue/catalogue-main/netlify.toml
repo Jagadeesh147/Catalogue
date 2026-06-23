@@ -1,0 +1,29 @@
+[build]
+  command = "npm install --include=dev && npm run build"
+  publish = "dist"
+
+# Prevent Netlify CDN from caching API responses
+[[headers]]
+  for = "/api/*"
+  [headers.values]
+    Cache-Control = "no-store, no-cache, must-revalidate"
+
+# Cache static assets (they have hash in filename)
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Proxy /api/* to Hostinger backend — avoids CORS entirely
+[[redirects]]
+  from = "/api/*"
+  to = "https://inoutcatalogue.inoutfashion.in/api/:splat"
+  status = 200
+  force = true
+
+# SPA fallback for client-side routes — only routes without extension
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  conditions = {Status = [404]}

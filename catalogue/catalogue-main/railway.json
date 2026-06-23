@@ -1,0 +1,16 @@
+{
+  "$schema": "https://railway.app/railway.schema.json",
+  "deprecated": true,
+  "note": "Backend migrated to Hostinger Node.js plan (https://inoutcatalogue.inoutfashion.in)",
+  "build": {
+    "builder": "NIXPACKS",
+    "buildCommand": "npm install --production=false"
+  },
+  "deploy": {
+    "startCommand": "node server.js",
+    "healthcheckPath": "/health",
+    "healthcheckTimeout": 300,
+    "restartPolicyType": "ON_FAILURE",
+    "restartPolicyMaxRetries": 3
+  }
+}
